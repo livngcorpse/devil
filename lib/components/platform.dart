@@ -1,3 +1,4 @@
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
@@ -6,7 +7,10 @@ import 'player.dart';
 
 class PlatformBlock extends RectangleComponent with CollisionCallbacks {
   PlatformBlock({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size, paint: Paint()..color = GameConstants.platformColor);
+      : super(
+            position: position,
+            size: size,
+            paint: Paint()..color = GameConstants.platformColor);
 
   @override
   Future<void> onLoad() async {

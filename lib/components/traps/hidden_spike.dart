@@ -1,3 +1,4 @@
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
@@ -11,10 +12,10 @@ class HiddenSpike extends RectangleComponent with CollisionCallbacks {
 
   HiddenSpike({required Vector2 position, Vector2? size})
       : super(
-    position: position,
-    size: size ?? Vector2(50, 20),
-    paint: Paint()..color = GameConstants.spikeHidden,
-  );
+          position: position,
+          size: size ?? Vector2(50, 20),
+          paint: Paint()..color = GameConstants.spikeHidden,
+        );
 
   @override
   Future<void> onLoad() async {

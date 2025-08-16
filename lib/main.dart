@@ -1,4 +1,4 @@
-
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
@@ -35,8 +35,8 @@ class RagePlatformerGame extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    camera.viewport = FixedResolutionViewport(Vector2(
-        GameConstants.viewportWidth, GameConstants.viewportHeight));
+    camera.viewport = FixedResolutionViewport(
+        Vector2(GameConstants.viewportWidth, GameConstants.viewportHeight));
     add(ScreenHitbox()); // for HUD taps if needed
 
     router = RouterComponent(
@@ -44,7 +44,7 @@ class RagePlatformerGame extends FlameGame
       routes: {
         'menu': Route(() => MenuScene()),
         'game': Route(() => GameScene()),
-        'win' : Route(() => WinScene()),
+        'win': Route(() => WinScene()),
       },
     );
     add(router);
@@ -52,5 +52,5 @@ class RagePlatformerGame extends FlameGame
 
   void goToMenu() => router.pushReplacementNamed('menu');
   void goToGame() => router.pushReplacementNamed('game');
-  void goToWin()  => router.pushReplacementNamed('win');
+  void goToWin() => router.pushReplacementNamed('win');
 }

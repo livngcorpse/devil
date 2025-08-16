@@ -1,7 +1,7 @@
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
-import '../../constants.dart';
 import '../player.dart';
 
 class FallingPlatform extends RectangleComponent with CollisionCallbacks {
@@ -12,7 +12,10 @@ class FallingPlatform extends RectangleComponent with CollisionCallbacks {
   double gravity = 1500;
 
   FallingPlatform({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size, paint: Paint()..color = const Color(0xFF8E9BAE));
+      : super(
+            position: position,
+            size: size,
+            paint: Paint()..color = const Color(0xFF8E9BAE));
 
   @override
   Future<void> onLoad() async {

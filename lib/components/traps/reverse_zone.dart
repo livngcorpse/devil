@@ -1,3 +1,4 @@
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
@@ -6,7 +7,10 @@ import '../player.dart';
 
 class ReverseZone extends RectangleComponent with CollisionCallbacks {
   ReverseZone({required Vector2 position, required Vector2 size})
-      : super(position: position, size: size, paint: Paint()..color = GameConstants.reverseZoneColor);
+      : super(
+            position: position,
+            size: size,
+            paint: Paint()..color = GameConstants.reverseZoneColor);
 
   @override
   Future<void> onLoad() async {

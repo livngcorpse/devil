@@ -1,4 +1,3 @@
-
 name: rage_platformer_flame
 description: A simple Level Devil–style rage platformer starter using Flutter + Flame.
 publish_to: "none"
@@ -9,11 +8,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flame: ^1.14.0
+  flame: ^1.12.0  # Use stable version instead of ^1.14.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0  # Add linting
 
 flutter:
   uses-material-design: true

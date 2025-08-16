@@ -1,3 +1,4 @@
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
@@ -16,24 +17,35 @@ class Player extends RectangleComponent
 
   Player({required Vector2 position})
       : super(
-    position: position,
-    size: Vector2(32, 40),
-    paint: Paint()..color = GameConstants.playerColor,
-  );
+          position: position,
+          size: Vector2(32, 40),
+          paint: Paint()..color = GameConstants.playerColor,
+        );
 
   @override
   Future<void> onLoad() async {
     add(RectangleHitbox(isSolid: false));
   }
 
-  void incReverse() { reverseOverlap++; reversed = reverseOverlap > 0; }
-  void decReverse() { reverseOverlap = (reverseOverlap - 1).clamp(0, 999); reversed = reverseOverlap > 0; }
+  void incReverse() {
+    reverseOverlap++;
+    reversed = reverseOverlap > 0;
+  }
+
+  void decReverse() {
+    reverseOverlap = (reverseOverlap - 1).clamp(0, 999);
+    reversed = reverseOverlap > 0;
+  }
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    moveLeft  = keysPressed.contains(LogicalKeyboardKey.arrowLeft) || keysPressed.contains(LogicalKeyboardKey.keyA);
-    moveRight = keysPressed.contains(LogicalKeyboardKey.arrowRight) || keysPressed.contains(LogicalKeyboardKey.keyD);
-    wantJump  = keysPressed.contains(LogicalKeyboardKey.space) || keysPressed.contains(LogicalKeyboardKey.keyW) || keysPressed.contains(LogicalKeyboardKey.arrowUp);
+    moveLeft = keysPressed.contains(LogicalKeyboardKey.arrowLeft) ||
+        keysPressed.contains(LogicalKeyboardKey.keyA);
+    moveRight = keysPressed.contains(LogicalKeyboardKey.arrowRight) ||
+        keysPressed.contains(LogicalKeyboardKey.keyD);
+    wantJump = keysPressed.contains(LogicalKeyboardKey.space) ||
+        keysPressed.contains(LogicalKeyboardKey.keyW) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowUp);
     return true;
   }
 

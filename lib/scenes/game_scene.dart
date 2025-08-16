@@ -1,7 +1,9 @@
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flame/collisions.dart';
+import 'package:flutter/services.dart'; // Add this import
 import '../constants.dart';
 import '../main.dart';
 import '../components/player.dart';
@@ -12,8 +14,8 @@ import '../components/traps/falling_platform.dart';
 import '../components/traps/ceiling_crusher.dart';
 import '../components/traps/reverse_zone.dart';
 
-class GameScene extends Component
-    with HasGameRef<RagePlatformerGame>, KeyboardHandler {
+abstract class GameScene extends Component
+    with HasGameRef<RagePlatformerGame>, HasKeyboardHandlerComponents {
   late final Player player;
   late final World world;
   late final CameraComponent cameraComponent;
@@ -25,8 +27,10 @@ class GameScene extends Component
     // World and camera
     world = World();
     cameraComponent = CameraComponent(world: world)
-      ..viewfinder.visibleGameSize = Vector2(GameConstants.viewportWidth, GameConstants.viewportHeight)
-      ..viewfinder.position = Vector2(GameConstants.viewportWidth/2, GameConstants.viewportHeight/2);
+      ..viewfinder.visibleGameSize =
+          Vector2(GameConstants.viewportWidth, GameConstants.viewportHeight)
+      ..viewfinder.position = Vector2(
+          GameConstants.viewportWidth / 2, GameConstants.viewportHeight / 2);
     addAll([world, cameraComponent]);
 
     // Background
@@ -42,9 +46,12 @@ class GameScene extends Component
     world.add(player);
 
     // Platforms layout (simple, hardcoded)
-    final ground = PlatformBlock(position: Vector2(0, 400), size: Vector2(1600, 50));
-    final ledge1 = PlatformBlock(position: Vector2(250, 320), size: Vector2(150, 20));
-    final ledge2 = PlatformBlock(position: Vector2(500, 260), size: Vector2(150, 20));
+    final ground =
+        PlatformBlock(position: Vector2(0, 400), size: Vector2(1600, 50));
+    final ledge1 =
+        PlatformBlock(position: Vector2(250, 320), size: Vector2(150, 20));
+    final ledge2 =
+        PlatformBlock(position: Vector2(500, 260), size: Vector2(150, 20));
     world.addAll([ground, ledge1, ledge2]);
 
     // Traps
@@ -67,21 +74,28 @@ class GameScene extends Component
 
     final left = HudButtonComponent(
       position: Vector2(20, GameConstants.viewportHeight - 80),
-      button: RectangleComponent(size: Vector2(60, 60), paint: Paint()..color = const Color(0xFF34495E)),
+      button: RectangleComponent(
+          size: Vector2(60, 60),
+          paint: Paint()..color = const Color(0xFF34495E)),
       onPressed: () => player.moveLeft = true,
       onReleased: () => player.moveLeft = false,
     );
 
     final right = HudButtonComponent(
       position: Vector2(100, GameConstants.viewportHeight - 80),
-      button: RectangleComponent(size: Vector2(60, 60), paint: Paint()..color = const Color(0xFF34495E)),
+      button: RectangleComponent(
+          size: Vector2(60, 60),
+          paint: Paint()..color = const Color(0xFF34495E)),
       onPressed: () => player.moveRight = true,
       onReleased: () => player.moveRight = false,
     );
 
     final jump = HudButtonComponent(
-      position: Vector2(GameConstants.viewportWidth - 80, GameConstants.viewportHeight - 80),
-      button: RectangleComponent(size: Vector2(60, 60), paint: Paint()..color = const Color(0xFF1ABC9C)),
+      position: Vector2(
+          GameConstants.viewportWidth - 80, GameConstants.viewportHeight - 80),
+      button: RectangleComponent(
+          size: Vector2(60, 60),
+          paint: Paint()..color = const Color(0xFF1ABC9C)),
       onPressed: () => player.wantJump = true,
       onReleased: () => player.wantJump = false,
     );
@@ -94,16 +108,11 @@ class GameScene extends Component
   void update(double dt) {
     super.update(dt);
     // Keep camera following player
-    cameraComponent.viewfinder.position = player.position + player.size/2;
+    cameraComponent.viewfinder.position = player.position + player.size / 2;
     // Simple respawn if falling off world
     if (player.position.y > GameConstants.worldHeight + 200) {
       player.position = spawnPoint.clone();
       player.velocity = Vector2.zero();
     }
-  }
-
-  @override
-  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    return false; // Player handles keyboard itself
   }
 }

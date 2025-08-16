@@ -1,10 +1,13 @@
+import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/collisions.dart';
 import '../../constants.dart';
+import '../../main.dart'; // Add this import
 import '../player.dart';
 
-class CeilingCrusher extends RectangleComponent with CollisionCallbacks, HasGameRef {
+class CeilingCrusher extends RectangleComponent
+    with CollisionCallbacks, HasGameRef<RagePlatformerGame> {
   final double startY;
   bool falling = false;
   double speed = 0;
@@ -14,7 +17,10 @@ class CeilingCrusher extends RectangleComponent with CollisionCallbacks, HasGame
 
   CeilingCrusher({required Vector2 position, required Vector2 size})
       : startY = position.y,
-        super(position: position, size: size, paint: Paint()..color = GameConstants.crusherColor);
+        super(
+            position: position,
+            size: size,
+            paint: Paint()..color = GameConstants.crusherColor);
 
   @override
   Future<void> onLoad() async {
@@ -50,7 +56,8 @@ class CeilingCrusher extends RectangleComponent with CollisionCallbacks, HasGame
   }
 
   @override
-  void onChildrenCollisionStart(PositionComponent child, Set<Vector2> points, PositionComponent other) {
+  void onChildrenCollisionStart(
+      PositionComponent child, Set<Vector2> points, PositionComponent other) {
     super.onChildrenCollisionStart(child, points, other);
     if (child == trigger && other is Player) {
       falling = true;
