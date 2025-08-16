@@ -19,7 +19,7 @@ class FallingPlatform extends RectangleComponent with CollisionCallbacks {
 
   @override
   Future<void> onLoad() async {
-    add(RectangleHitbox()); // starts solid
+    add(RectangleHitbox());
   }
 
   @override
@@ -36,8 +36,8 @@ class FallingPlatform extends RectangleComponent with CollisionCallbacks {
   }
 
   @override
-  void onCollision(Set<Vector2> points, PositionComponent other) {
-    super.onCollision(points, other);
+  bool onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
     if (other is Player) {
       if (!triggered) {
         // Land like a normal platform until it drops
@@ -51,6 +51,8 @@ class FallingPlatform extends RectangleComponent with CollisionCallbacks {
         other.position = Vector2(80, 300);
         other.velocity = Vector2.zero();
       }
+      return true;
     }
+    return false;
   }
 }

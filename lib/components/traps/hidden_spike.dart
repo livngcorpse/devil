@@ -19,7 +19,7 @@ class HiddenSpike extends RectangleComponent with CollisionCallbacks {
 
   @override
   Future<void> onLoad() async {
-    add(RectangleHitbox(isSolid: false)); // lethal; not ground
+    add(RectangleHitbox());
   }
 
   @override
@@ -35,8 +35,8 @@ class HiddenSpike extends RectangleComponent with CollisionCallbacks {
   }
 
   @override
-  void onCollisionStart(Set<Vector2> points, PositionComponent other) {
-    super.onCollisionStart(points, other);
+  bool onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
     if (other is Player) {
       if (!revealed) {
         timer = revealDelay;
@@ -45,6 +45,8 @@ class HiddenSpike extends RectangleComponent with CollisionCallbacks {
         other.position = Vector2(80, 300);
         other.velocity = Vector2.zero();
       }
+      return true;
     }
+    return false;
   }
 }

@@ -14,12 +14,12 @@ class PlatformBlock extends RectangleComponent with CollisionCallbacks {
 
   @override
   Future<void> onLoad() async {
-    add(RectangleHitbox()); // solid by convention
+    add(RectangleHitbox());
   }
 
   @override
-  void onCollision(Set<Vector2> points, PositionComponent other) {
-    super.onCollision(points, other);
+  bool onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
     if (other is Player) {
       final player = other;
       // Determine collision side using player's last position
@@ -46,6 +46,8 @@ class PlatformBlock extends RectangleComponent with CollisionCallbacks {
       } else if (playerLeftPrev >= myRight && player.velocity.x < 0) {
         player.pushSide(myRight);
       }
+      return true;
     }
+    return false;
   }
 }

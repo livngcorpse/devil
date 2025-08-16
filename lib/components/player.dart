@@ -24,7 +24,7 @@ class Player extends RectangleComponent
 
   @override
   Future<void> onLoad() async {
-    add(RectangleHitbox(isSolid: false));
+    add(RectangleHitbox());
   }
 
   void incReverse() {
@@ -38,7 +38,7 @@ class Player extends RectangleComponent
   }
 
   @override
-  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+  bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     moveLeft = keysPressed.contains(LogicalKeyboardKey.arrowLeft) ||
         keysPressed.contains(LogicalKeyboardKey.keyA);
     moveRight = keysPressed.contains(LogicalKeyboardKey.arrowRight) ||

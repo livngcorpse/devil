@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
-import 'package:flame/collisions.dart';
-import 'package:flutter/services.dart'; // Add this import
 import '../constants.dart';
 import '../main.dart';
 import '../components/player.dart';
@@ -14,7 +12,7 @@ import '../components/traps/falling_platform.dart';
 import '../components/traps/ceiling_crusher.dart';
 import '../components/traps/reverse_zone.dart';
 
-abstract class GameScene extends Component
+class GameScene extends Component
     with HasGameRef<RagePlatformerGame>, HasKeyboardHandlerComponents {
   late final Player player;
   late final World world;
@@ -72,36 +70,47 @@ abstract class GameScene extends Component
   Component _makeHud() {
     final hud = Component(priority: 1000);
 
-    final left = HudButtonComponent(
+    final left = _createButton(
       position: Vector2(20, GameConstants.viewportHeight - 80),
-      button: RectangleComponent(
-          size: Vector2(60, 60),
-          paint: Paint()..color = const Color(0xFF34495E)),
+      color: const Color(0xFF34495E),
       onPressed: () => player.moveLeft = true,
       onReleased: () => player.moveLeft = false,
     );
 
-    final right = HudButtonComponent(
+    final right = _createButton(
       position: Vector2(100, GameConstants.viewportHeight - 80),
-      button: RectangleComponent(
-          size: Vector2(60, 60),
-          paint: Paint()..color = const Color(0xFF34495E)),
+      color: const Color(0xFF34495E),
       onPressed: () => player.moveRight = true,
       onReleased: () => player.moveRight = false,
     );
 
-    final jump = HudButtonComponent(
+    final jump = _createButton(
       position: Vector2(
           GameConstants.viewportWidth - 80, GameConstants.viewportHeight - 80),
-      button: RectangleComponent(
-          size: Vector2(60, 60),
-          paint: Paint()..color = const Color(0xFF1ABC9C)),
+      color: const Color(0xFF1ABC9C),
       onPressed: () => player.wantJump = true,
       onReleased: () => player.wantJump = false,
     );
 
     hud.addAll([left, right, jump]);
     return hud;
+  }
+
+  Component _createButton({
+    required Vector2 position,
+    required Color color,
+    required VoidCallback onPressed,
+    required VoidCallback onReleased,
+  }) {
+    return ButtonComponent(
+      button: RectangleComponent(
+        size: Vector2(60, 60),
+        paint: Paint()..color = color,
+      ),
+      position: position,
+      onPressed: onPressed,
+      onReleased: onReleased,
+    );
   }
 
   @override

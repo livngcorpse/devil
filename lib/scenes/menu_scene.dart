@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/input.dart';
 import '../main.dart';
 import '../constants.dart';
 
@@ -40,12 +39,13 @@ class MenuScene extends Component
   }
 
   @override
-  void onTapDown(TapDownEvent event) {
+  bool onTapDown(TapDownEvent event) {
     final p = event.localPosition;
     final r = startButton.toRect();
     if (r.contains(Offset(p.x, p.y))) {
       gameRef.goToGame();
     }
+    return true;
   }
 }
 

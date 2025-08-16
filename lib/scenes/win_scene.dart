@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/input.dart';
 import '../constants.dart';
 import '../main.dart';
 import 'menu_scene.dart';
@@ -10,6 +9,7 @@ import 'menu_scene.dart';
 class WinScene extends Component
     with HasGameRef<RagePlatformerGame>, TapCallbacks {
   late final RectangleComponent playAgain;
+
   @override
   Future<void> onLoad() async {
     add(Background());
@@ -37,10 +37,11 @@ class WinScene extends Component
   }
 
   @override
-  void onTapDown(TapDownEvent event) {
+  bool onTapDown(TapDownEvent event) {
     final p = event.localPosition;
     if (playAgain.toRect().contains(Offset(p.x, p.y))) {
       gameRef.goToGame();
     }
+    return true;
   }
 }

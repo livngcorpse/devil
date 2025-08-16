@@ -17,14 +17,16 @@ class Door extends RectangleComponent
 
   @override
   Future<void> onLoad() async {
-    add(RectangleHitbox(isSolid: false));
+    add(RectangleHitbox());
   }
 
   @override
-  void onCollisionStart(Set<Vector2> points, PositionComponent other) {
-    super.onCollisionStart(points, other);
+  bool onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
     if (other is Player) {
       gameRef.goToWin();
+      return true;
     }
+    return false;
   }
 }

@@ -1,8 +1,7 @@
+import 'package:flame/camera.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/components.dart';
-import 'package:flame/input.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Route;
 import 'constants.dart';
 import 'scenes/menu_scene.dart';
 import 'scenes/game_scene.dart';
@@ -31,13 +30,11 @@ class RagePlatformerGame extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents, TapCallbacks {
   late final RouterComponent router;
 
-  RagePlatformerGame() : super(priority: 0);
-
   @override
   Future<void> onLoad() async {
     camera.viewport = FixedResolutionViewport(
-        Vector2(GameConstants.viewportWidth, GameConstants.viewportHeight));
-    add(ScreenHitbox()); // for HUD taps if needed
+        resolution:
+            Vector2(GameConstants.viewportWidth, GameConstants.viewportHeight));
 
     router = RouterComponent(
       initialRoute: 'menu',
